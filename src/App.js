@@ -1,9 +1,18 @@
-import {categories} from './directory/categories';
-import Directory from './components/directory/Directory.component'
+import { Routes, Route } from 'react-router-dom';
+import Home from './routes/home/home.component'
+import Navigation from './routes/navigation/navigation.component';
+
+const Shop = () => (<h1>I am the shop!</h1>)
 
 const App = () => {
   return (
-    <Directory categories={categories} />
+    <Routes>
+      <Route path='/' element={<Navigation />}>
+        <Route index element={<Home />} />
+        <Route path='home' element={<Home />} />
+        <Route path='shop' element={<Shop />} />
+      </Route>
+    </Routes>
   );
 }
 
