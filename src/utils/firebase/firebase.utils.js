@@ -5,6 +5,12 @@ import {
      signInWithPopup, 
      GoogleAuthProvider 
 } from 'firebase/auth'
+import {
+     getFirestore,
+     doc,
+     getDoc,
+     setDoc,
+} from 'firebase/firestore'
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,3 +32,21 @@ provider.setCustomParameters({
 
 export const auth = getAuth()
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
+
+export const db = getFirestore()
+
+export const createUserDocumentFromGoogleAuth = async (userAuth) => {
+     const userDocRef = doc(db, 'users', userAuth.user.uid)
+     const userSnapshot = await getDoc(userDocRef)
+     if (!userSnapshot.exists()) {
+          const {displayName, email} = userAuth.user
+          const createdAt = new Date()
+
+          try {
+               await setDoc(userDocRef, {displayName, email, createdAt})               
+          } catch (error) {
+               console.log('errer creating user', error.message)
+          }
+     }
+     return userDocRef
+}
