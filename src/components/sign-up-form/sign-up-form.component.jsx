@@ -27,9 +27,7 @@ const SignUpForm = () => {
           if (password !== comformPassword) return console.log('pass not match')
           try {
                const user = await createAuthUserWithEmailAndPassword(email, password)
-               console.log(user)
-               const ref = await createUserDocument(user, {displayName})
-               console.log(ref)
+               await createUserDocument(user, {displayName})
           } catch (error) {
                if (error.code === 'auth/email-already-in-use')
                     alert('error: email already in use')
@@ -39,7 +37,7 @@ const SignUpForm = () => {
      }
 
      return (
-          <div>
+          <div className="sign-up-container">
                <h2>Don't yet have an account?</h2>
                <span>Sign up with email</span>
                <form onSubmit={handleSubmit}>

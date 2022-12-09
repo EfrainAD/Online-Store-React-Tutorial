@@ -19,6 +19,7 @@ const SignInForm = () => {
      const { email, password } = formFields
      console.log(formFields)
      
+     const resetFormFields = () => (setFormFields(defaultFormFields))
      const signInWithGoogle = async () => {
           const user = await signInWithGooglePopup()
           await createUserDocument(user)
@@ -29,12 +30,27 @@ const SignInForm = () => {
      }
      const handleSubmit = async (e) => {
           e.preventDefault()
-          const response = await signInWithEmail(email, password)
-          console.log("Sign In with email res", response)
+          try {
+               const response = await signInWithEmail(email, password)
+               console.log("Sign In with email res", response)
+               // resetFormFields()
+          } catch (error) {
+               switch (error.code) {
+                    case 'auth/wrong-password':
+                         alert('Incorrect Password')
+                         break;
+                    case 'auth/user-not-found':
+                         alert('User does not exist')
+                         break;
+                    default:
+                         console.log(error)
+                         break;
+               }
+          }
      }
 
      return (
-          <div>
+          <div className="sign-in-container">
                <h2>I have an account?</h2>
                <span>Sign In with email</span>
                <form onSubmit={handleSubmit}>
@@ -55,9 +71,11 @@ const SignInForm = () => {
                          value={password} 
                          required
                     />
-                    
-                    <Button type="submit">Sign In</Button>
-                    <Button type="button" onClick={signInWithGoogle} btnType="google">Sign In With Google</Button>
+
+                    <div className="buttons-container">
+                         <Button type="submit">Sign In</Button>
+                         <Button type="button" onClick={signInWithGoogle} btnType="google">Sign In With Google</Button>
+                    </div>
                </form>
           </div>
      )
