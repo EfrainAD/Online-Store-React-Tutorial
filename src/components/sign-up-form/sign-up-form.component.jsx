@@ -3,6 +3,7 @@ import { createAuthUserWithEmailAndPassword, createUserDocument } from "../../ut
 import FormInput from '../form-input/form-input.component'
 import Button from "../button/button.component"
 import './sign-up-form.styles.scss'
+import { confirmPasswordReset } from "firebase/auth"
 
 const defaultFormFields = {
      displayName: '',
@@ -16,23 +17,39 @@ const SignUpForm = () => {
      const { displayName, email, password, comformPassword } = formFields
      console.log(formFields)
 
+     const resetFormFields = () => (setFormFields(defaultFormFields))
+     const resetPasswordFields = () => (setFormFields({...formFields, password: '', comformPassword: ''}))
+
      const handleChange = (e) => {
           const {name, value} = e.target
           setFormFields({...formFields, [name]: value})
      }
-     
      const handleSubmit = async (e) => {
           e.preventDefault()
           const { displayName, email, password, comformPassword } = formFields
-          if (password !== comformPassword) return console.log('pass not match')
+
+          if (password !== comformPassword) {
+               alert('pass not match')
+               return resetPasswordFields()
+          }
+          
           try {
                const user = await createAuthUserWithEmailAndPassword(email, password)
                await createUserDocument(user, {displayName})
+               resetFormFields()
           } catch (error) {
-               if (error.code === 'auth/email-already-in-use')
-                    alert('error: email already in use')
-               else 
-                    console.log('message', error.message)
+               switch (error.code) {
+                    case 'auth/weak-password':
+                         alert('Password should be at least 6 characters')
+                         resetPasswordFields()
+                         break;
+                    case 'auth/email-already-in-use':
+                         alert('User already exist')
+                         break;
+                    default:
+                         console.log(error)
+                         break;
+               }
           }
      }
 
