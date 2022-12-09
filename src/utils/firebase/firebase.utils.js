@@ -16,7 +16,6 @@ import {
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBu6PzwYQRwCSm49kwVXofgxzeiv_rHIU8",
   authDomain: "crwn-clothing-db-tutoria-f958c.firebaseapp.com",
@@ -33,11 +32,11 @@ provider.setCustomParameters({
 })
 
 export const auth = getAuth()
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
-
 export const db = getFirestore()
 
-export const createUserDocumentFromGoogleAuth = async (userAuth, addedInfo = {}) => {
+export const signInWithGooglePopup = () => signInWithPopup(auth, provider)
+
+export const createUserDocument = async (userAuth, addedInfo = {}) => {
      if (!userAuth) return
      const userDocRef = doc(db, 'users', userAuth.user.uid)
      const userSnapshot = await getDoc(userDocRef)
@@ -56,12 +55,11 @@ export const createUserDocumentFromGoogleAuth = async (userAuth, addedInfo = {})
      return userDocRef
 }
 
-export const createAuthUserWithEmailAndPassword = async (email, password) => {
-     if (!email || !password) return
-     return await createUserWithEmailAndPassword(auth, email, password)
-}
-
 export const signInWithEmail = async (email, password) => {
      if (!email || !password) return
      return await signInWithEmailAndPassword(auth, email, password)
+}
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+     if (!email || !password) return
+     return await createUserWithEmailAndPassword(auth, email, password)
 }

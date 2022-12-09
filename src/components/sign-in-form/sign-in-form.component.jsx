@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { 
-     createUserDocumentFromGoogleAuth,
+     createUserDocument,
      signInWithGooglePopup,
      signInWithEmail 
 } from '../../utils/firebase/firebase.utils'
@@ -21,7 +21,7 @@ const SignInForm = () => {
      
      const signInWithGoogle = async () => {
           const user = await signInWithGooglePopup()
-          await createUserDocumentFromGoogleAuth(user)
+          await createUserDocument(user)
      }
      const handleChange = (e) => {
           const {name, value} = e.target
