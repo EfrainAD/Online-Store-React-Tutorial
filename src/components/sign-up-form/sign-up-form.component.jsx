@@ -15,7 +15,6 @@ const defaultFormFields = {
 const SignUpForm = () => {
      const [formFields, setFormFields] = useState(defaultFormFields)
      const { displayName, email, password, comformPassword } = formFields
-     console.log(formFields)
 
      const resetFormFields = () => (setFormFields(defaultFormFields))
      const resetPasswordFields = () => (setFormFields({...formFields, password: '', comformPassword: ''}))
@@ -45,6 +44,9 @@ const SignUpForm = () => {
                          break;
                     case 'auth/email-already-in-use':
                          alert('User already exist')
+                         break;
+                    case 'auth/invalid-email':
+                         alert('invalid-email')
                          break;
                     default:
                          console.log(error)
