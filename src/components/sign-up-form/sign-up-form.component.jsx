@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromGoogleAuth } from "../../utils/firebase/firebase.utils"
-
+import FormInput from '../form-input/form-input.component'
 const defaultFormFields = {
      displayName: '',
      email: '',
@@ -39,17 +39,40 @@ const SignUpForm = () => {
           <div>
                <h1>Sign up with email</h1>
                <form onSubmit={handleSubmit}>
-                    <label>Display</label>
-                    <input type="text" onChange={handleChange} name="displayName" value={displayName} required/>
+                    <FormInput 
+                         label="Display Name"
+                         type="text" 
+                         onChange={handleChange} name="displayName" 
+                         value={displayName} 
+                         required
+                    />
                     
-                    <label>Email</label>
-                    <input type="email" onChange={handleChange} name="email" value={email} required/>
+                    <FormInput 
+                         label="Email" 
+                         type="email" 
+                         onChange={handleChange} 
+                         name="email" 
+                         value={email} 
+                         required 
+                    />
                     
-                    <label>Password</label>
-                    <input type="password" onChange={handleChange} name="password" value={password} required/>
+                    <FormInput 
+                         label="Password" 
+                         type="password" 
+                         onChange={handleChange}
+                         name="password" 
+                         value={password} 
+                         required
+                    />
                     
-                    <label>Comform Password</label>
-                    <input type="password" onChange={handleChange} name="comformPassword" value={comformPassword} required/>
+                    <FormInput 
+                         label="Comform Password" 
+                         type="password" 
+                         onChange={handleChange}
+                         name="comformPassword" 
+                         value={comformPassword} 
+                         required
+                    />
 
                     <button type="submit">Sign Up</button>
                </form>
