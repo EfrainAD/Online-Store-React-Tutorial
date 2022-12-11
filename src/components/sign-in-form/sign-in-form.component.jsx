@@ -26,6 +26,7 @@ const SignInForm = () => {
      const signInWithGoogle = async () => {
           const user = await signInWithGooglePopup()
           await createUserDocument(user)
+          setCurrentUser( user.user )
      }
      const handleChange = (e) => {
           const {name, value} = e.target
