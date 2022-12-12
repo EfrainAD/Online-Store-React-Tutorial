@@ -6,20 +6,16 @@ import { ReactComponent as CrownLogo} from '../../assets/crown.svg'
 import './navigation.styles.scss'
 
 const Navigation = () => {
-  const {currentUser, setCurrentUser} = useContext(UserContext)
-  console.log('CURRENT USER', currentUser)
-  const signOutHandler = async () => {
-    await signOutUser()
-    setCurrentUser(null)
-  }
+  const {currentUser} = useContext(UserContext)
+  
   return (
     <>
       <div className='navigation'>
         <Link className="nav-link" to='/'>
           <CrownLogo className="logo" />
         </Link>
-        <string>{currentUser?.email}</string>
-        <string>{currentUser?.displayName}</string>
+        <strong>{currentUser?.email}</strong>
+        <strong>{currentUser?.displayName}</strong>
         <div className="nav-links-container">
           <Link className="nav-link" to='/'>
             Home
@@ -27,7 +23,10 @@ const Navigation = () => {
           <Link className='nav-link' to='/shop'>
             Shop
           </Link>
-          {currentUser ? (<span className='nav-link' onClick={signOutHandler}>Log Out</span>) : (<Link className='nav-link' to='/auth'>Sing-In</Link>)}
+          {currentUser ? (
+            <span className='nav-link' onClick={signOutUser}>Log Out</span>
+            ):(
+              <Link className='nav-link' to='/auth'>Sing-In</Link>)}
         </div>
       </div>
       <Outlet />
