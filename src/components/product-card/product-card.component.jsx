@@ -1,8 +1,14 @@
 import './product-card.styles.scss'
+import { useContext } from 'react'
 import Button from '../button/button.component'
+import { CardContext } from '../../contexts/card.context'
 
 const ProductCard = ({product}) => {
      const {name, price, imageUrl} = product
+     const { addItemToCart } = useContext(CardContext)
+     const addProductToCart = () => {
+          addItemToCart(product)
+     }
      return (
           <div className='product-card-container'>
                <img src={imageUrl} alt={name} />
@@ -10,7 +16,7 @@ const ProductCard = ({product}) => {
                     <span className="name">{name}</span>
                     <span className="price">${price}</span>
                </div>
-               <Button btnType="inverted">Add to Cart</Button>
+               <Button btnType="inverted" onClick={addProductToCart} >Add to Cart</Button>
           </div>
      )
 }
