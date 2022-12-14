@@ -4,16 +4,14 @@ import './cart-icon.sytles.scss'
 import { CardContext } from '../../contexts/card.context'
 
 const CartIcon = () => {
-     const {isCardOpen, setIsCardOpen, numberOfItemsInCart} = useContext(CardContext)
+     const {isCardOpen, setIsCardOpen, cartCount} = useContext(CardContext)
 
      const toggleDisplay = () => setIsCardOpen(!isCardOpen)
-     const getItemCount = () => {
-          return numberOfItemsInCart()
-     }
+     
      return (
           <div className="cart-icon-container" onClick={toggleDisplay}>
                <ShoppingIcon className='shopping-icon' />
-               <span className='item-count' >{getItemCount()}</span>
+               <span className='item-count' >{cartCount}</span>
           </div>
      )
 }
