@@ -3,8 +3,11 @@ import { useContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
+
 import { UserProvider } from './contexts/user.context';
 import { ProductsProvider } from './contexts/products.context';
+import { DisplayDropdownProvider } from './contexts/displayDropDown.context';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -14,7 +17,9 @@ root.render(
     <BrowserRouter>
       <UserProvider>
         <ProductsProvider>
-          <App />
+          <DisplayDropdownProvider>
+            <App />
+          </DisplayDropdownProvider>
         </ProductsProvider>
       </UserProvider>
     </BrowserRouter>
