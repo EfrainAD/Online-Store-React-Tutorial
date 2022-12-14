@@ -1,12 +1,10 @@
 import { createContext, useState } from "react";
 
 const addCartItem = (cartItems, productToAdd) => {
-     console.log('cartItems:', cartItems)
-     console.log('productToAdd:', productToAdd)
-     const isCartItem = cartItems.find(cartItem => cartItem.id === productToAdd.id)
-     if (isCartItem) 
+     const existCartItem = cartItems.find(cartItem => cartItem.id === productToAdd.id)
+     if (existCartItem) 
           return cartItems.map((cartItem) => 
-               cartItem.id === isCartItem.id ? 
+               cartItem.id === existCartItem.id ? 
                {...cartItem, quantity: cartItem.quantity+1} 
                : cartItem
           )
@@ -25,7 +23,10 @@ export const CardProvider = ({ children }) => {
      const [cartItems, setCartItems] = useState([])
      
      const addItemToCart = (productToAdd) => setCartItems(addCartItem(cartItems, productToAdd))
+
+     const numberOfItemsInCart = () => 
+          cartItems.reduce((count, item) => count += item.quantity, 0)
      
-     const value = {isCardOpen, setIsCardOpen, cartItems, addItemToCart}
+     const value = {isCardOpen, setIsCardOpen, cartItems, addItemToCart, numberOfItemsInCart}
      return <CardContext.Provider value={value}>{children}</CardContext.Provider>
 }
