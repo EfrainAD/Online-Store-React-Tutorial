@@ -50,9 +50,13 @@ export const CardProvider = ({ children }) => {
 
      useEffect(() => {
           const newCartCount = cartItems.reduce((count, item) => count + item.quantity, 0)
-          const newTotelPrice = cartItems.reduce((price, item) => price += item.price * item.quantity, 0)
           
           setCartCount(newCartCount)
+     }, [cartItems])
+     
+     useEffect(() => {
+          const newTotelPrice = cartItems.reduce((price, item) => price += item.price * item.quantity, 0)
+          
           setTotelPrice(newTotelPrice)
      }, [cartItems])
      
