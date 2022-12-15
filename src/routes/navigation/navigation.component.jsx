@@ -2,7 +2,7 @@ import { useContext } from "react"
 import { Outlet, Link } from "react-router-dom"
 
 import { UserContext } from "../../contexts/user.context"
-import { CardContext } from "../../contexts/card.context"
+import { CartContext } from "../../contexts/cart.context"
 
 import { signOutUser } from "../../utils/firebase/firebase.utils"
 import CartIcon from '../../components/cart-icon/cart-icon.component'
@@ -13,7 +13,7 @@ import './navigation.styles.scss'
 
 const Navigation = () => {
   const {currentUser} = useContext(UserContext)
-  const {isCardOpen} = useContext(CardContext)
+  const {isCardOpen} = useContext(CartContext)
   
   return (
     <>

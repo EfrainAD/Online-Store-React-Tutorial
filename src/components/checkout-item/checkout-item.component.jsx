@@ -1,10 +1,10 @@
 import './checkout-item.styles.scss'
 import { useContext } from 'react'
-import { CardContext } from '../../contexts/card.context'
+import { CartContext } from '../../contexts/cart.context'
 
 const CheckoutItem = ({cartItem}) => {
      const {name, imageUrl, price, quantity} = cartItem
-     const {addItemToCart, subtractItemFromCart, removeFromCart} = useContext(CardContext)
+     const {addItemToCart, subtractItemFromCart, removeFromCart} = useContext(CartContext)
      
      const addOneMoreHandler = () => addItemToCart(cartItem)
      const subtractOneMoreHandler = () => subtractItemFromCart(cartItem)

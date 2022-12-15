@@ -25,7 +25,7 @@ const subtractCartItem = (cartItems, productToSubtract) => {
 
 const removeCartItem = (cartItems, productToRemove) => cartItems.filter(cartItem => cartItem.id !== productToRemove.id)
 
-export const CardContext = createContext({
+export const CartContext = createContext({
      isCardOpen: false,
      setIsCardOpen: () => null,
      cartItems: [],
@@ -36,7 +36,7 @@ export const CardContext = createContext({
      totelPrice: 0,
 })
 
-export const CardProvider = ({ children }) => {
+export const CartProvider = ({ children }) => {
      const [isCardOpen, setIsCardOpen] = useState(false)
      const [cartItems, setCartItems] = useState([])
      const [cartCount, setCartCount] = useState(0)
@@ -61,5 +61,5 @@ export const CardProvider = ({ children }) => {
      }, [cartItems])
      
      const value = {isCardOpen, setIsCardOpen, cartItems, cartCount, totelPrice, addItemToCart, subtractItemFromCart, removeFromCart}
-     return <CardContext.Provider value={value}>{children}</CardContext.Provider>
+     return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }
