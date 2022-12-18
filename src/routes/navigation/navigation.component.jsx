@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { Outlet, Link } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 
 import { UserContext } from "../../contexts/user.context"
 import { CartContext } from "../../contexts/cart.context"
@@ -24,16 +24,16 @@ const Navigation = () => {
         <strong>{currentUser?.email}</strong>
         <strong>{currentUser?.displayName}</strong>
         <NavLinks>
-          <NavLink className="nav-link" to='/'>
+          <NavLink to='/'>
             Home
           </NavLink>
-          <NavLink className='nav-link' to='/shop'>
+          <NavLink to='/shop'>
             Shop
           </NavLink>
           {currentUser ? (
-            <span className='nav-link' onClick={signOutUser}>Log Out</span>
+            <span onClick={signOutUser}>Log Out</span>
             ):(
-              <NavLink className='nav-link' to='/auth'>Sing-In</NavLink>)}
+              <NavLink to='/auth'>Sing-In</NavLink>)}
           <CartIcon />
         </NavLinks>
         {isCardOpen && <CartDropdown />}
