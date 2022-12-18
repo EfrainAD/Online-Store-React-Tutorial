@@ -5,7 +5,6 @@ export const BTN_TYPE_CLASSES = {
      google: 'google-sign-in',
      inverted: 'inverted',
 }
-
 export const getButton = (buttonType = BTN_TYPE_CLASSES.base) => (
      {
           [BTN_TYPE_CLASSES.base]: BaseButton, 

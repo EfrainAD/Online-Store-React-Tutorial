@@ -29,7 +29,7 @@ export const GogleSignInButton = styled(BaseButton)`
      color: white;
 
      &:hover {
-          background-color: #357ae8;
+          background-color: #357ae8
           border: none;
      }
 `
