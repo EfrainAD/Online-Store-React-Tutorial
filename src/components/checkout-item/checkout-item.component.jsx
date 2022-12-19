@@ -1,4 +1,3 @@
-// import './checkout-item.styles.scss'
 import { CheckoutItemContainer, ImageContainer, ItemName, ItemQuantityContainer, ItemPrice, RemoveButton, Arrow, ItemQuantity } from './checkout-item.styles'
 import { useContext } from 'react'
 import { CartContext } from '../../contexts/cart.context'
