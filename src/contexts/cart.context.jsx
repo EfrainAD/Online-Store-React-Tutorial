@@ -1,4 +1,6 @@
-import { createContext, useState, useEffect } from "react";
+import { useReducer } from "react";
+import { createContext } from "react";
+import { createAction } from "../utils/reducer/reducer.utils";
 
 const addCartItem = (cartItems, productToAdd) => {
      const existCartItem = cartItems.find(cartItem => cartItem.id === productToAdd.id)
@@ -36,29 +38,80 @@ export const CartContext = createContext({
      totelPrice: 0,
 })
 
+const INITIAL_STATE = {
+     isCardOpen: false,
+     cartItems: [],
+     cartCount: 0,
+     totelPrice: 0,
+}
+
+// Action type object
+export const CART_ACTION_TYPES = {
+     SET_CART_ITEMS: 'SET_CART_ITEMS',
+     SET_IS_CART_OPEN: 'SET_IS_CART_OPEN',
+}
+
+const cartReducer = (state, action) => {
+     const { type, payload } = action
+
+     switch (type) {
+          // Reducer guess code
+          case CART_ACTION_TYPES.SET_IS_CART_OPEN:
+               return {...state, isCardOpen: !state.isCardOpen}     
+               break;
+          case CART_ACTION_TYPES.SET_CART_ITEMS:
+               return {...state, ...payload}
+               break
+          default:
+               throw new Error(`unhandled type ${type} in cartReducer`)
+               break;
+     }
+
+}
+
 export const CartProvider = ({ children }) => {
-     const [isCardOpen, setIsCardOpen] = useState(false)
-     const [cartItems, setCartItems] = useState([])
-     const [cartCount, setCartCount] = useState(0)
-     const [totelPrice, setTotelPrice] = useState(0)
+     const [{isCardOpen, cartItems, cartCount, totelPrice}, dispatch] = useReducer(cartReducer, INITIAL_STATE)
      
-     const addItemToCart = (productToAdd) => setCartItems(addCartItem(cartItems, productToAdd))
-     
-     const subtractItemFromCart = (productToSubtract) => setCartItems(subtractCartItem(cartItems, productToSubtract))
-
-     const removeFromCart = (productToRemove) => setCartItems(removeCartItem(cartItems, productToRemove))
-
-     useEffect(() => {
-          const newCartCount = cartItems.reduce((count, item) => count + item.quantity, 0)
+     const updateCartItemReducer = (newCartItems) => {
+          // update new cart total
+          const newCartCount = newCartItems.reduce((count, item) => count + item.quantity, 0)
           
-          setCartCount(newCartCount)
-     }, [cartItems])
-     
-     useEffect(() => {
-          const newTotelPrice = cartItems.reduce((price, item) => price += item.price * item.quantity, 0)
+          // update new count for items in cart
+          const newTotelPrice = newCartItems.reduce((price, item) => price += item.price * item.quantity, 0)
           
-          setTotelPrice(newTotelPrice)
-     }, [cartItems])
+          // dispatch new payload
+          dispatch(createAction(
+               CART_ACTION_TYPES.SET_CART_ITEMS,  
+               {
+                    cartItems: newCartItems,
+                    cartCount: newCartCount,
+                    totelPrice: newTotelPrice,
+               }
+          ))
+     }
+     const updateIsCartOpenReducer = (isCartOpen) => {
+          dispatch(createAction(
+               CART_ACTION_TYPES.SET_IS_CART_OPEN,
+               {isCardOpen: isCartOpen}
+          ))
+     }
+     const setIsCardOpen = () => {
+          updateIsCartOpenReducer(!isCardOpen)
+     }
+     const addItemToCart = (productToAdd) => {
+          const newCartItems = addCartItem(cartItems, productToAdd)
+          updateCartItemReducer(newCartItems)
+     }
+
+     const subtractItemFromCart = (productToSubtract) => {
+          const newCartItems = subtractCartItem(cartItems, productToSubtract)
+          updateCartItemReducer(newCartItems)
+     }
+
+     const removeFromCart = (productToRemove) => {
+          const newCartItems = removeCartItem(cartItems, productToRemove)
+          updateCartItemReducer(newCartItems)
+     }
      
      const value = {isCardOpen, setIsCardOpen, cartItems, cartCount, totelPrice, addItemToCart, subtractItemFromCart, removeFromCart}
      return <CartContext.Provider value={value}>{children}</CartContext.Provider>
