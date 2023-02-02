@@ -57,7 +57,7 @@ const cartReducer = (state, action) => {
      switch (type) {
           // Reducer guess code
           case CART_ACTION_TYPES.SET_IS_CART_OPEN:
-               return {...state, isCardOpen: !state.isCardOpen}     
+               return {...state, isCardOpen: payload}     
                break;
           case CART_ACTION_TYPES.SET_CART_ITEMS:
                return {...state, ...payload}
@@ -92,10 +92,12 @@ export const CartProvider = ({ children }) => {
      const updateIsCartOpenReducer = (isCartOpen) => {
           dispatch(createAction(
                CART_ACTION_TYPES.SET_IS_CART_OPEN,
-               {isCardOpen: isCartOpen}
+               isCartOpen
           ))
      }
      const setIsCardOpen = () => {
+          console.log('is cart open', isCardOpen)
+          
           updateIsCartOpenReducer(!isCardOpen)
      }
      const addItemToCart = (productToAdd) => {
