@@ -16,6 +16,7 @@ import Checkout from './routes/checkout/checkout.component'
 const App = () => {
   const dispatch = useDispatch()
 
+  // Redux - User
   useEffect(() => {
     const unSub = onAuthStateChangedListener((user) => {
          if (user) {
