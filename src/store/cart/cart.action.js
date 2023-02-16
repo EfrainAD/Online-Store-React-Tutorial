@@ -23,13 +23,15 @@ const subtractCartItem = (cartItems, productToSubtract) => {
                     ).filter(cartItem => cartItem.quantity > 0)
      return [...cartItems]
 }
-const removeCartItem = (cartItems, productToRemove) => cartItems.filter(cartItem => cartItem.id !== productToRemove.id)
+const removeCartItem = (cartItems, productToRemove) => cartItems.filter(
+     cartItem => cartItem.id !== productToRemove.id
+)
 
 // exports actions
 export const setIsCartOpen = (isCartOpen) => createAction(
-          CART_ACTION_TYPES.SET_IS_CART_OPEN,
-          isCartOpen
-     )
+     CART_ACTION_TYPES.SET_IS_CART_OPEN,
+     isCartOpen
+)
 export const addItemToCart = (cartItems, productToAdd) => {
      const newCartItems = addCartItem(cartItems, productToAdd)
 
