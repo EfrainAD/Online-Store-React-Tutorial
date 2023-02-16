@@ -1,6 +1,4 @@
 import './product-card.styles.scss'
-import { useContext } from 'react'
-import { CartContext } from '../../contexts/cart.context'
 import { selectCartItems } from '../../store/cart/cart.selector'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItemToCart } from '../../store/cart/cart.action' 
