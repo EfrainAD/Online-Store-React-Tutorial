@@ -14,4 +14,9 @@ export const selectCategories = createSelector(
           acc[title.toLowerCase()] = items
           return acc
      }, {})
-) // ) (state) => state.categories.categories
+) 
+
+export const selectCategoriesIsLoading = createSelector(
+     [selectCategoryReducer],
+     (categories) => categories.isLoading
+)
